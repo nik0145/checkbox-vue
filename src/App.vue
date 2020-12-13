@@ -1,19 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Form @onShowForParent="showData" />
+    <code v-if="data && data.length > 0">
+      {{ data }}
+    </code>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Form from "./components/form.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      data: [],
+    };
+  },
+  methods: {
+    showData(value) {
+      this.data = value;
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    Form,
+  },
+};
 </script>
 
 <style>
