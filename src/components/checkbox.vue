@@ -1,18 +1,30 @@
 <template>
-  <div class="hello" v-if="value && category">
-    <label
-      ><input
-        type="checkbox"
-        :indeterminate.prop="isIntermediate"
-        v-model="isTrue"
-        id="checkall"
-      />
-      {{ category }}</label
-    >
-    <span v-for="(name, i) in value" :key="i">
-      <input type="checkbox" :value="name" v-model="checkedNames" />
-      <label>{{ name }}</label>
-    </span>
+  <div v-if="value && category">
+    <ul>
+      <li>
+        <span>
+          <label>
+            <input
+              type="checkbox"
+              :indeterminate.prop="isIntermediate"
+              v-model="isTrueMainCheckbox"
+              id="checkall"
+            />
+            {{ category }} (выбрано {{ checked }} из {{ numberValue }})</label
+          >
+        </span>
+      </li>
+      <ul>
+        <span v-for="(name, i) in value" :key="i">
+          <li>
+            <label>
+              <input type="checkbox" :value="name" v-model="checkedNames" />
+              {{ name }}</label
+            >
+          </li>
+        </span>
+      </ul>
+    </ul>
   </div>
 </template>
 
@@ -30,6 +42,9 @@ export default {
     },
   },
   computed: {
+    checked: function() {
+      return this.checkedNames.length;
+    },
     numberValue: function() {
       return this.value.length || 0;
     },
@@ -41,7 +56,7 @@ export default {
       );
     },
 
-    isTrue: {
+    isTrueMainCheckbox: {
       get: function() {
         return this.checkedNames.length === this.numberValue;
       },
@@ -63,4 +78,16 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+ul {
+  list-style: none;
+  margin: 5px 20px;
+}
+label {
+  margin-left: 5px;
+}
+li {
+  margin: 10px 2px;
+  text-align: left;
+}
+</style>
